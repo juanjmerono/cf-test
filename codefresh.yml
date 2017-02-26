@@ -22,6 +22,10 @@ steps:
       working_directory: ${{main_clone}}
       commands:
         - echo '${{VAR4}}' | grep -q VAR4
+	  when:
+	    condition:
+	      all:
+	        anyVariable: '(includes("${{VAR4}}","$")==false) || (includes("${{VAR3}}","$")==false)'
       on_fail:
         metadata:
           set:
@@ -32,7 +36,3 @@ steps:
           set:
             - ${{build_image.imageId}}:
               - var3: '${{VAR3}}'
-	  when:
-	    condition:
-	      all:
-	        anyVariable: '(includes("${{VAR4}}","$")==false) || (includes("${{VAR3}}","$")==false)'
