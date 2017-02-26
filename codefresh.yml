@@ -26,13 +26,13 @@ steps:
 	    condition:
 	      all:
 	        anyVariable: '(includes("${{VAR4}}","$")==false) || (includes("${{VAR3}}","$")==false)'
-      on_fail:
-        metadata:
-          set:
-            - ${{build_image.imageId}}:
-              - var4: '${{VAR4}}'
       on_success:
         metadata:
           set:
             - ${{build_image.imageId}}:
               - var3: '${{VAR3}}'
+      on_fail:
+        metadata:
+          set:
+            - ${{build_image.imageId}}:
+              - var4: '${{VAR4}}'
