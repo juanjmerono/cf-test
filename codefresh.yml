@@ -21,13 +21,14 @@ steps:
       image: arkban/alpine-aws-wget:latest
       working_directory: ${{main_clone}}
       commands:
-        - echo '${{VAR4}}'
-      on_success:
+        - echo '${{VAR4}}' | grep -qe "^\${{[A-Z_]*}}$"
+      fail_fast: false
+      on_fail:
         metadata:
           set:
             - ${{build_image.imageId}}:
               - var4: '${{VAR4}}'
-      on_fail:
+      on_success:
         metadata:
           set:
             - ${{build_image.imageId}}:
