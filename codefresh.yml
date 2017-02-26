@@ -9,30 +9,8 @@ steps:
       working_directory: ${{main_clone}}
       dockerfile: Dockerfile
       image_name: local/demo
-      tag: test
+      tag: 'test'
       metadata:
         set:
-          - var1: '${{VAR1:-hola}}'
+          - var1: '${{VAR1}}'
           - var2: '${{VAR2}}'
-    
-    add_metadata_binary:
-      title: Add Image Metadata
-      description: Add image metadata
-      image: arkban/alpine-aws-wget:latest
-      working_directory: ${{main_clone}}
-      commands:
-        - echo '${{VAR4}}' | grep -q VAR4
-	  when:
-	    condition:
-	      all:
-	        anyVariable: '(includes("${{VAR4}}","$")==false) || (includes("${{VAR3}}","$")==false)'
-      on_success:
-        metadata:
-          set:
-            - ${{build_image.imageId}}:
-              - var3: '${{VAR3}}'
-      on_fail:
-        metadata:
-          set:
-            - ${{build_image.imageId}}:
-              - var4: '${{VAR4}}'
