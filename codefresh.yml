@@ -1,0 +1,34 @@
+version: '1.0'
+
+steps:
+
+    build_image:
+      title: Building Image
+      description: Build docker image
+      type: build
+      working_directory: ${{main_clone}}
+      dockerfile: Dockerfile
+      image_name: local/demo
+      tag: test
+      metadata:
+        set:
+          - var1: '${{VAR1}}'
+          - var2: '${{VAR2}}'
+    
+    add_metadata_binary:
+      title: Add Image Metadata
+      description: Add image metadata
+      image: arkban/alpine-aws-wget:latest
+      working_directory: ${{main_clone}}
+      commands:
+        - test ! -z '${{VAR4}}'
+      on_success:
+        metadata:
+          set:
+            - ${{build_image.imageId}}:
+              - var4: '${{VAR4}}'
+      on_fail:
+        metadata:
+          set:
+            - ${{build_image.imageId}}:
+              - var3: '${{VAR3}}'
