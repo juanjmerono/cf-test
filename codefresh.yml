@@ -21,7 +21,7 @@ steps:
       image: arkban/alpine-aws-wget:latest
       working_directory: ${{main_clone}}
       commands:
-        - test ! -z '${{VAR4}}'
+        - echo '${{VAR4}}'
       on_success:
         metadata:
           set:
