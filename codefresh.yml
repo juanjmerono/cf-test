@@ -12,7 +12,7 @@ steps:
       tag: test
       metadata:
         set:
-          - var1: '${{VAR1}}'
+          - var1: '${{VAR1:-hola}}'
           - var2: '${{VAR2}}'
     
     add_metadata_binary:
