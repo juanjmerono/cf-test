@@ -21,8 +21,9 @@ steps:
       image: arkban/alpine-aws-wget:latest
       working_directory: ${{main_clone}}
       commands:
-        - echo '${{VAR4}}' | grep -qe "^\${{[A-Z_]*}}$"
-      fail_fast: false
+        - echo "^\\${{[0-9A-Z_]*}}$"
+        - echo "^\${{[0-9A-Z_]*}}$"
+        - echo '${{VAR4}}' | grep -qe "^\\${{[0-9A-Z_]*}}$"
       on_fail:
         metadata:
           set:
